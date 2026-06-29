@@ -58,6 +58,15 @@ Available in `GET /sessions/{id}/report` after session completes:
 | `equity_curve` | Equity value at each bar |
 | `trades` | Full fill log |
 
+## Session Lifecycle
+
+```
+created → running → completed
+                 ↘ error
+```
+
+Sessions are isolated asyncio tasks. Multiple can run concurrently. Each has its own equity curve, fill log, and pending orders queue.
+
 ## License
 
 Apache 2.0
