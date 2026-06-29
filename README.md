@@ -43,6 +43,7 @@ Set `ALPHA_VANTAGE_KEY` env var for forex (free tier: 5 req/min, 500/day).
 - **Order** — client-submitted buy/sell with qty and type (market/limit)
 - **Fill** — engine-generated execution confirmation with fill price and fee
 - **Session** — isolated backtest or paper trading run with its own config and portfolio
+- **BarEmitter** — replays historical bars in chronological order across all symbols in a session
 
 ## License
 
