@@ -26,6 +26,13 @@ Client (Python / Go / Rust / TS / anything)
    QuantForge Engine (Python + FastAPI + asyncio)
 ```
 
+## Core Concepts
+
+- **Bar** — OHLCV candlestick with symbol, timestamp, and asset class
+- **Order** — client-submitted buy/sell with qty and type (market/limit)
+- **Fill** — engine-generated execution confirmation with fill price and fee
+- **Session** — isolated backtest or paper trading run with its own config and portfolio
+
 ## License
 
 Apache 2.0
