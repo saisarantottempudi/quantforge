@@ -45,6 +45,19 @@ Set `ALPHA_VANTAGE_KEY` env var for forex (free tier: 5 req/min, 500/day).
 - **Session** — isolated backtest or paper trading run with its own config and portfolio
 - **BarEmitter** — replays historical bars in chronological order across all symbols in a session
 
+## Portfolio Metrics
+
+Available in `GET /sessions/{id}/report` after session completes:
+
+| Metric | Description |
+|---|---|
+| `total_pnl` | Total profit/loss in dollars |
+| `sharpe` | Annualized Sharpe ratio (daily returns, rf=0) |
+| `max_drawdown` | Maximum peak-to-trough equity drawdown |
+| `var_95` / `var_99` | Value at Risk at 95% / 99% confidence |
+| `equity_curve` | Equity value at each bar |
+| `trades` | Full fill log |
+
 ## License
 
 Apache 2.0
