@@ -6,9 +6,9 @@ bars_emitted = Counter(
     "quantforge_bars_emitted_total", "Total bars emitted", ["adapter", "asset_class"]
 )
 orders_received = Counter(
-    "quantforge_orders_received_total", "Total orders received", ["session_id"]
+    "quantforge_orders_received_total", "Total orders received"
 )
-fills_total = Counter("quantforge_fills_total", "Total fills", ["symbol", "side"])
+fills_total = Counter("quantforge_fills_total", "Total fills", ["side"])
 data_fetch_latency = Histogram(
     "quantforge_data_fetch_latency_seconds", "Data fetch latency", ["adapter"]
 )
