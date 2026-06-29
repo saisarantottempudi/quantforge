@@ -26,6 +26,17 @@ Client (Python / Go / Rust / TS / anything)
    QuantForge Engine (Python + FastAPI + asyncio)
 ```
 
+## Data Adapters
+
+| Adapter | Asset Class | API Key Required |
+|---|---|---|
+| `yfinance` | Equities, ETFs | No |
+| `ccxt` | Crypto (100+ exchanges) | No (public endpoints) |
+| `forex` | Forex pairs | Yes — Alpha Vantage free tier |
+| `synthetic` | Any (test/demo) | No |
+
+Set `ALPHA_VANTAGE_KEY` env var for forex (free tier: 5 req/min, 500/day).
+
 ## Core Concepts
 
 - **Bar** — OHLCV candlestick with symbol, timestamp, and asset class
