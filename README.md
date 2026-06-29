@@ -67,6 +67,19 @@ created → running → completed
 
 Sessions are isolated asyncio tasks. Multiple can run concurrently. Each has its own equity curve, fill log, and pending orders queue.
 
+## Observability
+
+Built-in, zero-config:
+
+- **Prometheus metrics** at `GET /metrics`: sessions active, bars emitted, orders received, fills, data fetch latency
+- **Structured JSON logs** via structlog (session_id + asset_class tagged on every event)
+
+Start with Prometheus + Grafana pre-wired:
+```bash
+docker compose -f docker-compose.observability.yml up
+```
+Grafana: http://localhost:3000
+
 ## License
 
 Apache 2.0
