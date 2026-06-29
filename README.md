@@ -80,6 +80,23 @@ docker compose -f docker-compose.observability.yml up
 ```
 Grafana: http://localhost:3000
 
+## REST API
+
+Interactive docs at http://localhost:8000/docs
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `POST` | `/sessions` | Create a session → `{session_id, ws_url}` |
+| `GET` | `/sessions/{id}` | Session state + config |
+| `DELETE` | `/sessions/{id}` | Stop and remove session |
+| `GET` | `/sessions/{id}/portfolio` | Current positions, cash, equity |
+| `GET` | `/sessions/{id}/report` | Full report (Sharpe, VaR, drawdown, trades) |
+| `GET` | `/sessions/{id}/trades` | Fill log |
+| `GET` | `/sessions/{id}/orders` | Pending orders |
+| `GET` | `/health` | Liveness check |
+| `GET` | `/metrics` | Prometheus metrics |
+| `WS` | `/sessions/{id}/stream` | Bar stream + order submission |
+
 ## License
 
 Apache 2.0
