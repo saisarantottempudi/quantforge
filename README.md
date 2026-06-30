@@ -1,5 +1,7 @@
 # QuantForge
 
+[![CI](https://github.com/saisarantottempudi/quantforge/actions/workflows/ci.yml/badge.svg)](https://github.com/saisarantottempudi/quantforge/actions/workflows/ci.yml)
+
 Language-agnostic backtesting and paper trading engine.
 
 Strategy logic runs in **your client** (any language). The engine handles data, simulation, portfolio tracking, and observability.

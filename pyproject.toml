@@ -37,3 +37,6 @@ target-version = "py312"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP"]
+
+[tool.bandit]
+skips = ["B101"]  # skip assert warnings (used in tests)
