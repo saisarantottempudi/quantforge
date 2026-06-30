@@ -1,0 +1,8 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: quantforge
+    static_configs:
+      - targets: ["quantforge:8000"]
+    metrics_path: /metrics

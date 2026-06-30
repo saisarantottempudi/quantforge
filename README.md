@@ -16,6 +16,23 @@ docker compose up
 
 Then connect any WebSocket client to `ws://localhost:8000/sessions/{id}/stream`.
 
+## Docker
+
+**Engine only:**
+```bash
+docker compose up --build
+```
+
+**Engine + Prometheus + Grafana:**
+```bash
+docker compose -f docker-compose.observability.yml up --build
+```
+
+- API: http://localhost:8000
+- Metrics: http://localhost:8000/metrics
+- Prometheus: http://localhost:9090
+- Grafana: http://localhost:3000 (anonymous admin)
+
 ## Architecture
 
 ```
