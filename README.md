@@ -116,6 +116,17 @@ Interactive docs at http://localhost:8000/docs
 | `GET` | `/metrics` | Prometheus metrics |
 | `WS` | `/sessions/{id}/stream` | Bar stream + order submission |
 
+## Examples
+
+Start the engine first: `docker compose up --build`
+
+### Python
+```bash
+cd examples/python
+pip install -r requirements.txt
+python sma_crossover.py
+```
+
 ## License
 
 Apache 2.0
