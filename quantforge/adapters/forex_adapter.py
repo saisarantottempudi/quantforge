@@ -1,7 +1,9 @@
 import os
+from collections.abc import AsyncIterator
 from datetime import datetime
-from typing import AsyncIterator
+
 import httpx
+
 from quantforge.adapters.base import DataAdapter
 from quantforge.core.models import AssetClass, Bar
 

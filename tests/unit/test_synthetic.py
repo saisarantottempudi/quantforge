@@ -1,5 +1,7 @@
 import pytest
+
 from quantforge.adapters.synthetic import SyntheticAdapter
+
 
 @pytest.mark.asyncio
 async def test_synthetic_emits_correct_count():

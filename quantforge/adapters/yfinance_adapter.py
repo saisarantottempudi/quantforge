@@ -1,6 +1,8 @@
 import asyncio
-from typing import AsyncIterator
+from collections.abc import AsyncIterator
+
 import yfinance as yf
+
 from quantforge.adapters.base import DataAdapter
 from quantforge.core.models import AssetClass, Bar
 

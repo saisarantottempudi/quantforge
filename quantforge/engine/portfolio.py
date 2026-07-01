@@ -1,4 +1,5 @@
 import math
+
 from quantforge.core.models import Fill, OrderSide, Position
 
 

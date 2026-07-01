@@ -1,4 +1,5 @@
-from typing import AsyncIterator
+from collections.abc import AsyncIterator
+
 from quantforge.adapters.base import DataAdapter
 from quantforge.core.models import Bar, SessionConfig
 

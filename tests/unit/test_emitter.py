@@ -1,7 +1,8 @@
 import pytest
-from quantforge.engine.emitter import BarEmitter
+
 from quantforge.adapters.synthetic import SyntheticAdapter
 from quantforge.core.models import SessionConfig
+from quantforge.engine.emitter import BarEmitter
 
 
 def _config(symbols: list[str]) -> SessionConfig:

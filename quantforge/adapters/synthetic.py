@@ -1,5 +1,6 @@
+from collections.abc import AsyncIterator
 from datetime import datetime, timedelta
-from typing import AsyncIterator
+
 from quantforge.adapters.base import DataAdapter
 from quantforge.core.models import Bar
 

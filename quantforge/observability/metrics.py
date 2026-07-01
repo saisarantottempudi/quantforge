@@ -1,5 +1,5 @@
-from prometheus_client import Counter, Gauge, Histogram, make_asgi_app
 from fastapi import FastAPI
+from prometheus_client import Counter, Gauge, Histogram, make_asgi_app
 
 sessions_active = Gauge("quantforge_sessions_active", "Active sessions")
 bars_emitted = Counter(

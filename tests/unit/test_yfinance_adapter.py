@@ -1,7 +1,8 @@
-import pytest
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
+
 import pandas as pd
-from datetime import datetime
+import pytest
+
 from quantforge.adapters.yfinance_adapter import YFinanceAdapter
 from quantforge.core.models import AssetClass
 

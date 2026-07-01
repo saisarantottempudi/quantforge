@@ -1,7 +1,7 @@
-from enum import Enum
+from enum import StrEnum
 
 
-class EventType(str, Enum):
+class EventType(StrEnum):
     BAR = "BAR"
     ORDER = "ORDER"
     CANCEL = "CANCEL"

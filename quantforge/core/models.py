@@ -1,11 +1,12 @@
-from datetime import datetime, UTC
-from enum import Enum
-from typing import Literal
 import uuid
+from datetime import UTC, datetime
+from enum import StrEnum
+from typing import Literal
+
 from pydantic import BaseModel, Field
 
 
-class AssetClass(str, Enum):
+class AssetClass(StrEnum):
     EQUITY = "equity"
     CRYPTO = "crypto"
     FOREX = "forex"
@@ -17,18 +18,18 @@ class Bar(BaseModel):
     ts: datetime
     o: float
     h: float
-    l: float
+    l: float  # noqa: E741
     c: float
     v: float
     asset_class: AssetClass = AssetClass.EQUITY
 
 
-class OrderSide(str, Enum):
+class OrderSide(StrEnum):
     BUY = "buy"
     SELL = "sell"
 
 
-class OrderType(str, Enum):
+class OrderType(StrEnum):
     MARKET = "market"
     LIMIT = "limit"
 
@@ -59,12 +60,12 @@ class Position(BaseModel):
     avg_cost: float
 
 
-class SessionMode(str, Enum):
+class SessionMode(StrEnum):
     BACKTEST = "backtest"
     PAPER = "paper"
 
 
-class SessionStatus(str, Enum):
+class SessionStatus(StrEnum):
     CREATED = "created"
     RUNNING = "running"
     COMPLETED = "completed"

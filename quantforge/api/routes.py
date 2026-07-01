@@ -1,5 +1,7 @@
 import asyncio
+
 from fastapi import APIRouter, HTTPException, Request, WebSocket, WebSocketDisconnect
+
 from quantforge.adapters.ccxt_adapter import CCXTAdapter
 from quantforge.adapters.forex_adapter import ForexAdapter
 from quantforge.adapters.synthetic import SyntheticAdapter

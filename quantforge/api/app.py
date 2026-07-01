@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+
 from quantforge.api.routes import router
 from quantforge.engine.session_manager import SessionManager
 from quantforge.observability.logging import setup_logging

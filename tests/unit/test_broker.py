@@ -1,5 +1,6 @@
 from datetime import datetime
-from quantforge.core.models import Order, OrderSide, SlippageConfig, FeeConfig, Bar
+
+from quantforge.core.models import Bar, FeeConfig, Order, OrderSide, SlippageConfig
 from quantforge.engine.broker import PaperBroker
 
 

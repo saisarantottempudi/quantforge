@@ -1,8 +1,8 @@
-import asyncio
 import pytest
+
+from quantforge.adapters.synthetic import SyntheticAdapter
 from quantforge.core.models import Order, OrderSide, SessionConfig
 from quantforge.engine.session_manager import SessionManager
-from quantforge.adapters.synthetic import SyntheticAdapter
 
 
 @pytest.fixture

@@ -1,4 +1,4 @@
-from quantforge.core.models import Bar, Fill, FeeConfig, Order, OrderSide, SlippageConfig
+from quantforge.core.models import Bar, FeeConfig, Fill, Order, OrderSide, SlippageConfig
 
 
 class PaperBroker:

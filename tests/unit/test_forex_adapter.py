@@ -1,5 +1,7 @@
-import pytest
 from unittest.mock import AsyncMock, MagicMock, patch
+
+import pytest
+
 from quantforge.adapters.forex_adapter import ForexAdapter
 from quantforge.core.models import AssetClass
 

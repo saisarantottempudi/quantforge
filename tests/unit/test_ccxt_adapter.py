@@ -1,8 +1,9 @@
-import pytest
 from unittest.mock import AsyncMock, patch
+
+import pytest
+
 from quantforge.adapters.ccxt_adapter import CCXTAdapter
 from quantforge.core.models import AssetClass
-
 
 MOCK_OHLCV = [
     [1704153600000, 42000.0, 43000.0, 41500.0, 42500.0, 150.5],
