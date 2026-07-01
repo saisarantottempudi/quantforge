@@ -134,6 +134,13 @@ go mod tidy
 go run .
 ```
 
+### TypeScript
+```bash
+cd examples/typescript
+npm install
+npm start
+```
+
 ## License
 
 Apache 2.0
