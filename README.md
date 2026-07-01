@@ -127,6 +127,13 @@ pip install -r requirements.txt
 python sma_crossover.py
 ```
 
+### Go
+```bash
+cd examples/go
+go mod tidy
+go run .
+```
+
 ## License
 
 Apache 2.0
