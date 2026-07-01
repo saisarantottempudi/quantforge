@@ -1,22 +1,80 @@
 # QuantForge
 
 [![CI](https://github.com/saisarantottempudi/quantforge/actions/workflows/ci.yml/badge.svg)](https://github.com/saisarantottempudi/quantforge/actions/workflows/ci.yml)
+[![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/python-3.12%2B-blue.svg)](https://www.python.org/)
 
-Language-agnostic backtesting and paper trading engine.
+**Language-agnostic backtesting and paper trading engine.** Write your strategy in any language — Python, Go, TypeScript, Rust, anything with WebSocket support. QuantForge handles data, simulation, portfolio tracking, and observability.
 
-Strategy logic runs in **your client** (any language). The engine handles data, simulation, portfolio tracking, and observability.
+## How it works
 
-## Status
-
-Under active development
+1. Create a session (REST POST) — choose symbols, date range, capital, and data adapter
+2. Connect via WebSocket — receive `BAR` events as price data streams
+3. Send `ORDER` events back — the engine fills at bar close with configurable slippage and fees
+4. Fetch the report (REST GET) — Sharpe ratio, max drawdown, VaR, equity curve
 
 ## Quickstart
 
+**Requires Docker.**
+
 ```bash
-docker compose up
+git clone https://github.com/saisarantottempudi/quantforge.git
+cd quantforge
+docker compose up --build
 ```
 
-Then connect any WebSocket client to `ws://localhost:8000/sessions/{id}/stream`.
+Then run any example client:
+
+```bash
+# Python
+cd examples/python && pip install -r requirements.txt && python sma_crossover.py
+
+# Go
+cd examples/go && go mod tidy && go run .
+
+# TypeScript
+cd examples/typescript && npm install && npm start
+```
+
+## Supported assets
+
+| Adapter | Asset class | API key? |
+|---------|-------------|----------|
+| `yfinance` | Equities, ETFs | No |
+| `ccxt` | Crypto (100+ exchanges) | No (public data) |
+| `forex` | Forex pairs | Optional (Alpha Vantage free tier) |
+| `synthetic` | Synthetic / testing | No |
+
+## REST API
+
+| Method | Path | Description |
+|--------|------|-------------|
+| `POST` | `/sessions` | Create session |
+| `GET` | `/sessions/{id}` | Session status |
+| `GET` | `/sessions/{id}/report` | Performance report |
+| `GET` | `/sessions/{id}/trades` | Trade history |
+| `GET` | `/sessions/{id}/portfolio` | Current portfolio |
+| `DELETE` | `/sessions/{id}` | Delete session |
+| `WS` | `/sessions/{id}/stream` | Bar/fill/portfolio stream |
+| `GET` | `/metrics` | Prometheus metrics |
+| `GET` | `/health` | Health check |
+
+Interactive docs at http://localhost:8000/docs
+
+## Session config
+
+```json
+{
+  "symbols": ["AAPL", "MSFT"],
+  "start": "2023-01-01",
+  "end": "2023-12-31",
+  "capital": 10000.0,
+  "data_adapter": "yfinance",
+  "slippage": {"model": "fixed_bps", "value": 5},
+  "fees": {"model": "percent", "value": 0.001},
+  "portfolio_tick_interval": 10
+}
+```
 
 ## Docker
 
@@ -31,116 +89,31 @@ docker compose -f docker-compose.observability.yml up --build
 ```
 
 - API: http://localhost:8000
-- Metrics: http://localhost:8000/metrics
 - Prometheus: http://localhost:9090
-- Grafana: http://localhost:3000 (anonymous admin)
-
-## Architecture
-
-```
-Client (Python / Go / Rust / TS / anything)
-   |  WebSocket  <- BAR, FILL, PORTFOLIO_TICK events
-   |  REST       <- session control, portfolio queries, reports
-         |
-   QuantForge Engine (Python + FastAPI + asyncio)
-```
-
-## Data Adapters
-
-| Adapter | Asset Class | API Key Required |
-|---|---|---|
-| `yfinance` | Equities, ETFs | No |
-| `ccxt` | Crypto (100+ exchanges) | No (public endpoints) |
-| `forex` | Forex pairs | Yes — Alpha Vantage free tier |
-| `synthetic` | Any (test/demo) | No |
-
-Set `ALPHA_VANTAGE_KEY` env var for forex (free tier: 5 req/min, 500/day).
-
-## Core Concepts
-
-- **Bar** — OHLCV candlestick with symbol, timestamp, and asset class
-- **Order** — client-submitted buy/sell with qty and type (market/limit)
-- **Fill** — engine-generated execution confirmation with fill price and fee
-- **Session** — isolated backtest or paper trading run with its own config and portfolio
-- **BarEmitter** — replays historical bars in chronological order across all symbols in a session
-
-## Portfolio Metrics
-
-Available in `GET /sessions/{id}/report` after session completes:
-
-| Metric | Description |
-|---|---|
-| `total_pnl` | Total profit/loss in dollars |
-| `sharpe` | Annualized Sharpe ratio (daily returns, rf=0) |
-| `max_drawdown` | Maximum peak-to-trough equity drawdown |
-| `var_95` / `var_99` | Value at Risk at 95% / 99% confidence |
-| `equity_curve` | Equity value at each bar |
-| `trades` | Full fill log |
-
-## Session Lifecycle
-
-```
-created → running → completed
-                 ↘ error
-```
-
-Sessions are isolated asyncio tasks. Multiple can run concurrently. Each has its own equity curve, fill log, and pending orders queue.
-
-## Observability
-
-Built-in, zero-config:
-
-- **Prometheus metrics** at `GET /metrics`: sessions active, bars emitted, orders received, fills, data fetch latency
-- **Structured JSON logs** via structlog (session_id + asset_class tagged on every event)
-
-Start with Prometheus + Grafana pre-wired:
-```bash
-docker compose -f docker-compose.observability.yml up
-```
-Grafana: http://localhost:3000
-
-## REST API
-
-Interactive docs at http://localhost:8000/docs
-
-| Method | Endpoint | Description |
-|---|---|---|
-| `POST` | `/sessions` | Create a session → `{session_id, ws_url}` |
-| `GET` | `/sessions/{id}` | Session state + config |
-| `DELETE` | `/sessions/{id}` | Stop and remove session |
-| `GET` | `/sessions/{id}/portfolio` | Current positions, cash, equity |
-| `GET` | `/sessions/{id}/report` | Full report (Sharpe, VaR, drawdown, trades) |
-| `GET` | `/sessions/{id}/trades` | Fill log |
-| `GET` | `/sessions/{id}/orders` | Pending orders |
-| `GET` | `/health` | Liveness check |
-| `GET` | `/metrics` | Prometheus metrics |
-| `WS` | `/sessions/{id}/stream` | Bar stream + order submission |
+- Grafana: http://localhost:3000
 
 ## Examples
 
-Start the engine first: `docker compose up --build`
+| Language | File | Dependencies |
+|----------|------|--------------|
+| Python | `examples/python/sma_crossover.py` | `httpx`, `websockets` |
+| Go | `examples/go/main.go` | `nhooyr.io/websocket` |
+| TypeScript | `examples/typescript/sma_crossover.ts` | `ws`, `ts-node` |
 
-### Python
+All examples implement SMA(10/20) crossover on AAPL 2023 data.
+
+## Development
+
 ```bash
-cd examples/python
-pip install -r requirements.txt
-python sma_crossover.py
+python -m venv .venv && source .venv/bin/activate
+pip install -e ".[dev]"
+pytest tests/ -v          # 41 tests
+ruff check quantforge/ tests/
+bandit -r quantforge/ -ll
 ```
 
-### Go
-```bash
-cd examples/go
-go mod tidy
-go run .
-```
-
-### TypeScript
-```bash
-cd examples/typescript
-npm install
-npm start
-```
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the full guide.
 
 ## License
 
-Apache 2.0
+Apache-2.0 — see [LICENSE](LICENSE).
